@@ -1,18 +1,45 @@
 from kuksa_client.grpc import VSSClient
 import sys
 
-def check_kuksa_connection(ip: str, port: int):
-    try:
-        with VSSClient(ip, port) as client:
-            # Test access to a known VSS signal
-            result = client.get_current_values(['Vehicle.Speed'])
-            print("✅ Connection successful!")
-            print(f"📈 Sample data: Vehicle.Speed = {result['Vehicle.Speed'].value}")
-            return True
-    except Exception as e:
-        print("❌ Could not connect to Kuksa Data Broker.")
-        print(f"Error: {e}")
-        return False
+class DataBrokerConnection:
+    # string ip_address;
+
+
+    _instance = None
+
+    # 
+    def __new__(cls):
+        if cls._instance is None:
+            # print("Creating the singleton instance...")
+            cls._instance = super(DataBrokerConnection, cls).__new__(cls)
+        return cls._instance
+
+    def __init__(self, ip_address, port):
+        self.ip_address = ip_address
+        self.port = port
+        
+    
+    
+    def check_kuksa_connection(ip: str, port: int):
+        try:
+            with VSSClient(ip, port) as client:
+                # Test access to a known VSS signal
+                result = client.get_current_values(['Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity'])
+                print(result)
+                print("✅ Connection successful!")
+                #print(f"📈 Sample data: Vehicle.Speed = {result['Vehicle.Speed'].value}")
+                print(f"📈 Sample data: Vehicle.Speed = {result['Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity'].value}")
+                # Create a single DataEntry for the signal and value
+                # data = [DataEntry("Vehicle.Powertrain.CombustionEngine.DieselExhaustFluid.Capacity", 88.5)]  # Example: set Vehicle.Speed to 88.5
+
+                # Publish the data
+                # success = client.set(data)
+
+                
+        except Exception as e:
+            print("❌ Could not connect to Kuksa Data Broker.")
+            print(f"Error: {e}")
+            return False
 
 def establishKuskaConnection(ip: str,port: int):
     # ip = input("Enter Kuksa Data Broker IP address (default: 127.0.0.1): ").strip() or "127.0.0.1"
