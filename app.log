@@ -1,0 +1,6 @@
+2025-06-29 10:11:01,082 - INFO - No Root CA present, it will not be possible to use a secure connection!
+2025-06-29 10:11:01,082 - INFO - Establishing insecure channel
+2025-06-29 10:11:01,101 - INFO - Connection Established
+2025-06-29 12:36:44,072 - INFO - No Root CA present, it will not be possible to use a secure connection!
+2025-06-29 12:36:44,073 - INFO - Establishing insecure channel
+2025-06-29 12:36:44,099 - INFO - Connection Established

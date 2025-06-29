@@ -7,4 +7,8 @@ class ConnectionDialog(QDialog):
         uic.loadUi("UI/connectionDialogBox.ui", self)
 
     def get_values(self):
-        return self.ip_input.text(), self.port_input.text()
+        return self.ip_address_input.text(), self.port_input.text()
+    
+    def set_values(self, ip, port):
+        self.ip_address_input.setText(ip)
+        self.port_input.setText(port)
