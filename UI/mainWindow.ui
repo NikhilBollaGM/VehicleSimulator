@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>792</width>
-    <height>580</height>
+    <width>872</width>
+    <height>628</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>261</width>
+      <width>501</width>
       <height>341</height>
      </rect>
     </property>
@@ -35,85 +35,179 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label">
+    <widget class="QGroupBox" name="groupBox">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>151</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:13px;
-font-weight:bold;</string>
-     </property>
-     <property name="text">
-      <string>Selected File</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="file_name_container">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>40</y>
-       <width>211</width>
-       <height>31</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_2">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
+       <x>10</x>
        <y>80</y>
-       <width>151</width>
-       <height>21</height>
+       <width>481</width>
+       <height>251</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">font:13px;
-font-weight:bold;</string>
+      <string notr="true">QGroupBox {
+    font: bold 15px; /* title only */
+}
+
+QGroupBox QLabel, QGroupBox QLineEdit {
+    font: bold 13px; /* inner widgets */
+    border:2px;
+}
+</string>
      </property>
-     <property name="text">
-      <string>Signals</string>
+     <property name="title">
+      <string>Signal Information</string>
      </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="signal_name_label">
+        <property name="text">
+         <string>Signal name:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLabel" name="signal_name_value_container">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="description_label">
+        <property name="text">
+         <string>Description:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QLabel" name="description_value_container">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="signal_type_label">
+        <property name="text">
+         <string>Signal Type:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="signal_type_value_container">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="datatype_label">
+        <property name="text">
+         <string>Datatype:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="datatype_value_container">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="unit_label">
+        <property name="text">
+         <string>Units:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QLabel" name="unit_value_container">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox{
+ font: bold 15px;
+}
+
+QGroupBox QLabel{
+ font: 10px;
+}</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
-    <widget class="QComboBox" name="signal_list_dropdown">
+    <widget class="QGroupBox" name="groupBox_2">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>110</y>
-       <width>211</width>
-       <height>31</height>
+       <x>10</x>
+       <y>0</y>
+       <width>481</width>
+       <height>71</height>
       </rect>
      </property>
-    </widget>
-    <widget class="QFrame" name="frame_3">
-     <property name="geometry">
-      <rect>
-       <x>190</x>
-       <y>210</y>
-       <width>361</width>
-       <height>221</height>
-      </rect>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    font: bold 15px; /* title only */
+}</string>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
+     <property name="title">
+      <string>Signal</string>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QComboBox" name="signal_list_dropdown">
+          <property name="minimumSize">
+           <size>
+            <width>400</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="editable">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
    </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>520</x>
       <y>10</y>
-      <width>481</width>
+      <width>341</width>
       <height>341</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
     </property>
     <property name="styleSheet">
      <string notr="true">Background-color:rgb(255,255,255);</string>
@@ -124,304 +218,214 @@ font-weight:bold;</string>
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QLabel" name="label_3">
+    <widget class="QGroupBox" name="groupBox_3">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>10</y>
-       <width>441</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-weight:bold;
-font:18px;</string>
-     </property>
-     <property name="text">
-      <string>Signal Information</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_4">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>50</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font-weight:bold;
-font:14px</string>
-     </property>
-     <property name="text">
-      <string>Signal Name:</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_5">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>110</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:14px</string>
-     </property>
-     <property name="text">
-      <string>Signal Type:</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="signal_info_name">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>50</y>
-       <width>241</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="signal_info_type">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>110</y>
-       <width>241</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="send_signal_button">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>280</y>
-       <width>161</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font:12px;
-font-weight:bold;
-background-color:rgb(85, 170, 255);
-color:white</string>
-     </property>
-     <property name="text">
-      <string>Send Signal</string>
-     </property>
-    </widget>
-    <widget class="QStackedWidget" name="stackedWidget">
-     <property name="geometry">
-      <rect>
-       <x>130</x>
-       <y>180</y>
-       <width>261</width>
-       <height>80</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">Background-color:rgb(255,255,255);</string>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="page_5">
-      <widget class="QLabel" name="label_7">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>20</y>
-         <width>181</width>
-         <height>20</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:12px;
-font-weight:bold;
-background-color:rgb(255, 255, 255);
-alignment:Center;</string>
-       </property>
-       <property name="text">
-        <string>            Select a signal</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="page">
-      <widget class="QRadioButton" name="signal_true_radio">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>62</width>
-         <height>14</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:12px;
-font-weight:bold</string>
-       </property>
-       <property name="text">
-        <string>True</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="signal_false_radio">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>40</y>
-         <width>62</width>
-         <height>14</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:12px;
-font-weight:bold</string>
-       </property>
-       <property name="text">
-        <string>False</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="page_2">
-      <widget class="QSpinBox" name="signal_value_int">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QToolButton" name="toolButton_2">
-       <property name="geometry">
-        <rect>
-         <x>210</x>
-         <y>20</y>
-         <width>41</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:12px;
-background-color:rgb(85, 170, 255);
-font-weight:bold;
-color:rgb(255, 255, 255)</string>
-       </property>
-       <property name="text">
-        <string>Set</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="page_3">
-      <widget class="QComboBox" name="signal_value_enum">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QToolButton" name="toolButton_3">
-       <property name="geometry">
-        <rect>
-         <x>210</x>
-         <y>20</y>
-         <width>41</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:12px;
-background-color:rgb(85, 170, 255);
-font-weight:bold;
-color:rgb(255, 255, 255)</string>
-       </property>
-       <property name="text">
-        <string>Set</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="page_4">
-      <widget class="QDoubleSpinBox" name="signal_value_double">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>20</y>
-         <width>191</width>
-         <height>22</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QToolButton" name="toolButton_4">
-       <property name="geometry">
-        <rect>
-         <x>210</x>
-         <y>20</y>
-         <width>41</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font:12px;
-background-color:rgb(85, 170, 255);
-font-weight:bold;
-color:rgb(255, 255, 255)</string>
-       </property>
-       <property name="text">
-        <string>Set</string>
-       </property>
-      </widget>
-     </widget>
-    </widget>
-   </widget>
-   <widget class="QScrollArea" name="scrollArea">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>370</y>
-      <width>761</width>
-      <height>191</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">Background-color:rgb(255,255,255);
-border:0px</string>
-    </property>
-    <property name="widgetResizable">
-     <bool>true</bool>
-    </property>
-    <widget class="QWidget" name="scrollAreaWidgetContents">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
+       <x>10</x>
        <y>0</y>
-       <width>761</width>
-       <height>191</height>
+       <width>321</width>
+       <height>331</height>
       </rect>
      </property>
-     <widget class="QLabel" name="label_6">
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    font: bold 15px; /* title only */
+}
+
+</string>
+     </property>
+     <property name="title">
+      <string>Input</string>
+     </property>
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>40</y>
+        <width>301</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">Background-color:rgb(255,255,255);</string>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="page_5">
+       <widget class="QLabel" name="label_7">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>80</y>
+          <width>231</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font:16px;
+font-weight:bold;
+color: rgb(120, 120, 120);</string>
+        </property>
+        <property name="text">
+         <string>            Select a signal</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page">
+       <widget class="QWidget" name="layoutWidget">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>271</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QRadioButton" name="signal_true_radio">
+           <property name="styleSheet">
+            <string notr="true">font:12px;
+font-weight:bold</string>
+           </property>
+           <property name="text">
+            <string>True</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QRadioButton" name="signal_false_radio">
+           <property name="styleSheet">
+            <string notr="true">font:12px;
+font-weight:bold</string>
+           </property>
+           <property name="text">
+            <string>False</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_2">
+       <widget class="QSpinBox" name="signal_value_int">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>281</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_3">
+       <widget class="QComboBox" name="signal_value_enum">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>281</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="page_4">
+       <widget class="QDoubleSpinBox" name="signal_value_double">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>281</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QToolButton" name="send_signal_button">
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>10</y>
-        <width>111</width>
-        <height>21</height>
+        <y>260</y>
+        <width>281</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">font:12px;
 font-weight:bold;
-</string>
+background-color:rgb(85, 170, 255);
+color:white</string>
       </property>
       <property name="text">
-       <string>[SIGNAL INFO]</string>
+       <string>Send Signal</string>
       </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>359</y>
+      <width>851</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QGroupBox {
+    font: bold 15px; /* title only */
+	background-color: rgb(255, 255, 255);
+border:0px;
+}
+
+</string>
+    </property>
+    <property name="title">
+     <string>LOGS</string>
+    </property>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>19</y>
+       <width>831</width>
+       <height>211</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(95, 95, 95);</string>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>829</width>
+        <height>209</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QTextEdit" name="log_output_area">
+         <property name="styleSheet">
+          <string notr="true">font-family:monospace</string>
+         </property>
+         <property name="lineWrapMode">
+          <enum>QTextEdit::NoWrap</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>
@@ -431,8 +435,8 @@ font-weight:bold;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>792</width>
-     <height>26</height>
+     <width>872</width>
+     <height>18</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuVehicle_signal_simulator">
@@ -458,7 +462,6 @@ font-weight:bold;
    <addaction name="menuData_Broker"/>
    <addaction name="menuLogs"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionBrowse_file">
    <property name="text">
     <string>Browse file</string>
