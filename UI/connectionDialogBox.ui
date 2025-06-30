@@ -31,7 +31,7 @@
    <widget class="QToolButton" name="databroker_connect_button">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>110</x>
       <y>100</y>
       <width>101</width>
       <height>22</height>
@@ -40,7 +40,8 @@
     <property name="styleSheet">
      <string notr="true">font:12px;
 font-weight:bold;
-background-color:rgb(63, 63, 63);
+background-color:rgb(85, 170, 255);
+color:white
 </string>
     </property>
     <property name="text">
