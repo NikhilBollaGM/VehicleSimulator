@@ -1,13 +1,13 @@
 from kuksa_client.grpc import VSSClient, Datapoint
 from typing import Optional, List
-
 from models.signal_model import SignalObject
 
 class KuksaConnector:
+    
+    
     _instance = None
 
     def __new__(cls, ip: str = "127.0.0.1", port: int = 55555):
-    # def __new__(cls, ip: str = "host.docker.internal", port: int = 55555):
 
         if cls._instance is None:
             cls._instance = super(KuksaConnector, cls).__new__(cls)
@@ -127,7 +127,7 @@ def establishKuskaConnection(ip: str, port: int):
         print("✅ Connection successful")
         signal_objects = connector.get_all_signal_objects()
         print(f"📦 Total Signal Objects: {len(signal_objects)}")
-        print(signal_objects.pop().description)
+        # print(signal_objects.pop().description)
     else:
         print("❌ Connection failed")
 

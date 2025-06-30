@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>872</width>
-    <height>628</height>
+    <width>881</width>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,6 +17,43 @@
    <string notr="true">background-color:rgb(227, 227, 227)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QGroupBox {
+    font: bold 15px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    margin-top: 10px;
+    padding: 4px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+    padding: 0 3px;
+}
+QLineEdit#signal_search_input {
+    padding: 4px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font-size: 13px;
+}
+QListWidget#signal_list_widget {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 13px;
+}
+QToolButton#send_signal_button {
+    font: bold 13px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    padding: 6px;
+}
+QToolButton#send_signal_button:hover {
+    background-color: #0056b3;
+}</string>
+   </property>
    <widget class="QFrame" name="frame">
     <property name="geometry">
      <rect>
@@ -147,23 +184,22 @@ QGroupBox QLabel{
         </property>
        </widget>
       </item>
-      <item row="7" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
-    <widget class="QGroupBox" name="groupBox_2">
+    <widget class="QGroupBox" name="groupBox_5">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>0</y>
        <width>481</width>
-       <height>71</height>
+       <height>81</height>
       </rect>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>400</height>
+      </size>
      </property>
      <property name="styleSheet">
       <string notr="true">QGroupBox {
@@ -173,19 +209,29 @@ QGroupBox QLabel{
      <property name="title">
       <string>Signal</string>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-         <widget class="QComboBox" name="signal_list_dropdown">
+         <widget class="QLineEdit" name="signal_search_input">
           <property name="minimumSize">
            <size>
-            <width>400</width>
-            <height>0</height>
+            <width>0</width>
+            <height>30</height>
            </size>
           </property>
-          <property name="editable">
-           <bool>true</bool>
+         </widget>
+        </item>
+        <item>
+         <widget class="QToolButton" name="signal_dropdown_button">
+          <property name="minimumSize">
+           <size>
+            <width>30</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>...</string>
           </property>
          </widget>
         </item>
@@ -193,6 +239,8 @@ QGroupBox QLabel{
       </item>
      </layout>
     </widget>
+    <zorder>groupBox_5</zorder>
+    <zorder>groupBox</zorder>
    </widget>
    <widget class="QFrame" name="frame_2">
     <property name="geometry">
@@ -397,7 +445,8 @@ border:0px;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(95, 95, 95);</string>
+      <string notr="true">background-color: rgb(219, 219, 219);
+font:10px</string>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
@@ -415,7 +464,12 @@ border:0px;
        <item>
         <widget class="QTextEdit" name="log_output_area">
          <property name="styleSheet">
-          <string notr="true">font-family:monospace</string>
+          <string notr="true">font-family: Consolas, monospace;
+    font-size: 13px;
+    background-color: #1e1e1e;
+    color: white;
+    padding: 6px;
+    border-radius: 4px;</string>
          </property>
          <property name="lineWrapMode">
           <enum>QTextEdit::NoWrap</enum>
@@ -429,22 +483,50 @@ border:0px;
      </widget>
     </widget>
    </widget>
+   <widget class="QListWidget" name="signal_list_widget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>80</y>
+      <width>461</width>
+      <height>250</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>250</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>250</height>
+     </size>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOff</enum>
+    </property>
+    <property name="selectionRectVisible">
+     <bool>false</bool>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>872</width>
+     <width>881</width>
      <height>18</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuVehicle_signal_simulator">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionBrowse_file"/>
-   </widget>
    <widget class="QMenu" name="menuData_Broker">
     <property name="title">
      <string>Data Broker</string>
@@ -453,12 +535,11 @@ border:0px;
    </widget>
    <widget class="QMenu" name="menuLogs">
     <property name="title">
-     <string>Logs</string>
+     <string>View</string>
     </property>
-    <addaction name="actionEnable"/>
+    <addaction name="actionLogs"/>
     <addaction name="actionDisable"/>
    </widget>
-   <addaction name="menuVehicle_signal_simulator"/>
    <addaction name="menuData_Broker"/>
    <addaction name="menuLogs"/>
   </widget>
@@ -477,7 +558,10 @@ border:0px;
     <string>Connect</string>
    </property>
   </action>
-  <action name="actionEnable">
+  <action name="actionLogs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Enable</string>
    </property>
