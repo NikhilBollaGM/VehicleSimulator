@@ -25,11 +25,15 @@ class SignalObject:
         self.max_value = max_value
         self.allowed_values = allowed_values
 
-        self.value = None  # Value not fetched yet
+        # Derived attribute
+        self.is_enum = self.data_type == "STRING" and self.allowed_values is not None
+
+        # Value is optional and not yet fetched
+        self.value = None
 
     def __str__(self):
+        enum_info = f" [ENUM: {self.allowed_values}]" if self.is_enum else ""
         return (
-            f"{self.name} [{self.data_type}] ({self.entry_type}) | "
-            f"Desc: {self.description} | Unit: {self.unit} | "
-            f"Min: {self.min_value} Max: {self.max_value} | Allowed: {self.allowed_values}"
+            f"{self.name} [{self.data_type}] ({self.entry_type})"
+            f"{enum_info} | Desc: {self.description}"
         )

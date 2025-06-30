@@ -80,7 +80,6 @@ class KuksaConnector:
                 )
 
                 signal_objects.append(signal)
-                # print(f"✅ Created: {signal}")
 
             return signal_objects
         except Exception as e:
