@@ -156,3 +156,7 @@
 2025-06-30 10:40:34,910 - INFO - Connection Established
 2025-06-30 10:41:47,225 - INFO - Connection Established
 2025-06-30 10:42:03,003 - INFO - Connection Established
+2025-06-30 15:38:31,598 - INFO - No Root CA present, it will not be possible to use a secure connection!
+2025-06-30 15:38:31,598 - INFO - Establishing insecure channel
+2025-06-30 15:39:13,002 - INFO - No Root CA present, it will not be possible to use a secure connection!
+2025-06-30 15:39:13,002 - INFO - Establishing insecure channel
