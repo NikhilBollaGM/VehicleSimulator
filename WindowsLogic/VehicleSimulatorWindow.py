@@ -345,5 +345,5 @@ class MainWindow(QMainWindow):
         #     self.value_label.setText(f"Value: {val:.2f}")
         # else:
         self.signal_value_min_max.setText(f"{value}")
-
+# 
   
