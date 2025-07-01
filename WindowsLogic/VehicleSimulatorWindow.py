@@ -39,18 +39,24 @@ class MainWindow(QMainWindow):
         self.connection_dialog = None
         self.active_signal = None
         self.loading_yaml = False
-        self.kuksaConnectorObj = KuksaConnector()
+        self.kuksaConnectorObj = None
         self.signals= {} 
         self.initialising = True
+        self.isDatabrokerConnected = False
         self.signal_value_int.setMinimum(-999999) 
         self.signal_value_int.setMaximum(999999) #need to handle in designer and dynamically based min and max
+        self.signal_value_double.setMaximum(999999)#need to handle in designer and 
+
+        self.stackedWidget.setCurrentIndex(0) #default input area
+
 
         # logs visibility toggle
-        self.groupBox_4.setVisible(False)
-        self.actionLogs.setChecked(False)  # or False based on default
+        self.groupBox_4.setVisible(False)  #default log area disable visibility
+        self.actionLogs.setChecked(False)  #logs checkbox default
         self.actionLogs.triggered.connect(self.toggle_log_visibility)
 
-
+        #
+        self.signal_min_max_slider.valueChanged.connect(self.on_value_change)
 
         #signal dropdown widgets
         self.signal_list_widget.hide()
@@ -84,10 +90,18 @@ class MainWindow(QMainWindow):
     def showConnectionDialog(self):
         if not self.connection_dialog:
             self.connection_dialog = ConnectionDialog()
-            self.connection_dialog.databroker_connect_button.clicked.connect(lambda: self.onEstablishConnection(self.connection_dialog)) #lambda 
-
+            
+            if(not self.isDatabrokerConnected):
+                self.connection_dialog.databroker_connect_button.clicked.connect(lambda: self.onEstablishConnection(self.connection_dialog)) #lambda 
+            else:
+                self.connection_dialog.databroker_connect_button.clicked.connect(lambda: self.onDisconnect(self.connection_dialog))
         print("connect button clicked")
         self.connection_dialog.exec_()
+
+    # when clicked on disconnect button
+    def onDisconnect(self):
+        print("Disconnecting")
+        self.kuksaConnectorObj.disconnect()
 
     # when clickedon connect button   
     def onEstablishConnection(self, dialog):
@@ -97,100 +111,30 @@ class MainWindow(QMainWindow):
         print(ip)
 
         # Connecting to kuksa
-        establishKuskaConnection(ip,port)
+        self.kuksaConnectorObj = establishKuksaConnection(ip,port)
+
         
-        if(self.kuksaConnectorObj.connected):
-            logging.info("Connection Established")
-            dialog.set_values(ip,port)
-            self.connection_dialog.databroker_connect_button.setText("Disconnect")
-            self.actionEstablish_connection_2.setText("Disconnect")
-            
-        # fetching all the signals and storing it in signal objects
-        signal_objects = self.kuksaConnectorObj.get_all_signal_objects()
         
-        self.signals = {s.name: s for s in signal_objects}
-        self.all_signals = list(self.signals.keys())
+        if(not self.kuksaConnectorObj == None ):
+            if(self.kuksaConnectorObj.connected ):
+                self.isDatabrokerConnected = False
+                logging.info("Connection Established")
+                self.log_message(f"Conected to IP:{ip}, PORT:{port}")
+                dialog.set_values(ip,port)
+                self.connection_dialog.databroker_connect_button.setText("Disconnect")
+                self.actionEstablish_connection_2.setText("Disconnect")
+            
+            # fetching all the signals and storing it in signal objects
+            signal_objects = self.kuksaConnectorObj.get_all_signal_objects()
+            
+            self.signals = {s.name: s for s in signal_objects}
+            self.all_signals = list(self.signals.keys())
+
+            #adding al signals into signal list
+            self.signal_list_widget.clear() 
+            self.signal_list_widget.addItems(self.all_signals)
+            self.signal_search_input.clear()
         
-        # before code below for combo
-        # self.signal_list_dropdown.blockSignals(True)
-        # self.signal_list_dropdown.clear()
-        # self.signal_list_dropdown.addItem("None")  # Add 'None' as default
-        # self.signal_list_dropdown.addItems(self.all_signals)
-        # self.signal_list_dropdown.setCurrentIndex(0)  # So 'None' is selected
-        # self.signal_list_dropdown.blockSignals(False)
-
-        #adding al signals into signal list
-        self.signal_list_widget.clear() 
-        self.signal_list_widget.addItems(self.all_signals)
-        self.signal_search_input.clear()
-        
-        # self.signal_list_dropdown.lineEdit().clear()
- 
-    #function when an signal item is clicked:based on signal signal info 
-    def on_signal_selected(self, signal_name):
-
-        if not signal_name.strip() or signal_name not in self.signals:
-            self.active_signal = None
-            self.signal_name_value_container.setText("")
-            self.description_value_container.setText("")
-            self.signal_type_value_container.setText("")
-            self.datatype_value_container.setText("")
-            self.unit_value_container.setText("")
-            self.stackedWidget.setCurrentIndex(0)
-            return
-
-
-        print(self.signal_list_dropdown.currentIndex())
-        if(self.signal_list_dropdown.currentIndex() > 0):
-            print(self.signal_list_dropdown.currentIndex())
-            signal = self.signals.get(signal_name)
-            print(signal)
-            self.active_signal = signal
-            if(self.active_signal != None):
-                self.active_signal.value = self.kuksaConnectorObj.get_vss_signal(self.active_signal.name)
-            
-            # print(self.active_signal.name)
-            if not signal:
-                return
-            
-            # self.sav_temp_value()
-
-            self.signal_name_value_container.setText(signal.name)
-            self.description_value_container.setText(signal.description or "")
-            self.signal_type_value_container.setText(signal.entry_type)
-            self.datatype_value_container.setText(signal.data_type)
-            self.unit_value_container.setText(signal.unit or "")
-            
-    
-            # Switch stacked widget page based on type
-            type_map = {
-                "empty":0,
-                "BOOL": 1, "BOOLEAN": 1,
-                "INTEGER": 2, "INT": 2, "INT8" "UINT8": 2, "UINT16": 2, "UINT32": 2,
-                "ENUM": 3, "STRING": 3,
-                "DOUBLE": 4, "FLOAT": 4
-            }
-            index = type_map.get(signal.data_type, 0)
-
-            self.stackedWidget.setCurrentIndex(index) #based on type particular input widget will be shown
-
-
-            # logic to show the previous value in the input
-            match index:
-                case 1:
-                    self.signal_true_radio.setChecked(signal.value is True)
-                    self.signal_false_radio.setChecked(signal.value is False)
-                case 2:
-                    self.signal_value_int.setValue(signal.value or 0)
-                case 3:
-                    self.signal_value_enum.clear()
-                    # self.signal_value_enum.addItems(signal.allowed)
-                    # if signal.temp_value:
-                    #     idx = self.signal_value_enum.findText(signal.temp_value)
-                        # if idx >= 0:
-                            # self.signal_value_enum.setCurrentIndex(idx)
-                case 4:
-                    self.signal_value_double.setValue(signal.value or 0.0)
 
 
     def commit_value(self):
@@ -222,6 +166,11 @@ class MainWindow(QMainWindow):
 
             elif index == 4:  # DOUBLE
                 value = self.signal_value_double.value()
+            elif index == 5: #min and max
+                print("sliding")
+                value = int(self.signal_value_min_max.text())
+            elif index == 6: #string
+                value = self.signal_value_string.text() 
 
             else:  # No valid signal input page
                 QMessageBox.warning(self, "Invalid Input", "No valid input widget found.")
@@ -252,6 +201,8 @@ class MainWindow(QMainWindow):
         # if self.signal_list_widget.isVisible():
         #     self.signal_list_widget.raise_()
 
+
+# signal search function
     def filter_signal_list(self, text):
         if not hasattr(self, "all_signals"):
             return
@@ -269,25 +220,15 @@ class MainWindow(QMainWindow):
         self.signal_list_widget.show()
 
     def select_signal_from_list(self, item):
-        selected_name = item.text()
-        if selected_name == "No match":
-            return
-
-        self.signal_search_input.setText(selected_name)
-        self.signal_list_widget.hide()
-        self.on_signal_selected(selected_name)
-
-
-
-    def select_signal_from_list(self, item):
         signal_name = item.text()
         if signal_name == "No match":
             return
 
-        self.signal_search_input.setText(signal_name)  # set it in input
+        self.signal_search_input.setText(signal_name) #setting signal name in input
         self.signal_list_widget.hide()  # hide dropdown
-        # self.on_signal_selected(selected_name)  # delegate to original handler
+        
         if not signal_name.strip() or signal_name not in self.signals:
+            print("empty signal")
             self.active_signal = None
             self.signal_name_value_container.setText("")
             self.description_value_container.setText("")
@@ -296,11 +237,9 @@ class MainWindow(QMainWindow):
             self.unit_value_container.setText("")
             self.stackedWidget.setCurrentIndex(0)
             return
-
-
-        # print(self.signal_list_dropdown.currentIndex())
         
         signal = self.signals.get(signal_name)
+        print("on signal select")
         print(signal)
         self.active_signal = signal
         if(self.active_signal != None):
@@ -322,12 +261,24 @@ class MainWindow(QMainWindow):
         type_map = {
             "empty":0,
             "BOOL": 1, "BOOLEAN": 1,
-            "INTEGER": 2, "INT": 2, "INT8" "UINT8": 2, "UINT16": 2, "UINT32": 2,
+            "INTEGER": 2, "INT": 2, "INT32":2, "UINT8": 2, "INT8" "UINT8": 2, "UINT16": 2, "UINT32": 2,
             "ENUM": 3, "STRING": 3,
             "DOUBLE": 4, "FLOAT": 4
         }
         index = type_map.get(signal.data_type, 0)
+        print(index)
+
+        if(not signal.is_enum and index == 3):
+            index = 6 #to display string input
+        elif((signal.min_value != None) and (signal.max_value != None) ):
+            index=5
+            print(signal.min_value)
+            print(signal.max_value)
+
         self.stackedWidget.setCurrentIndex(index) #based on type particular input widget will be shown
+
+        # if(hasattr(signal, "min_value")):
+            
         # logic to show the previous value in the input
         match index:
             case 1:
@@ -337,10 +288,62 @@ class MainWindow(QMainWindow):
                 self.signal_value_int.setValue(signal.value or 0)
             case 3:
                 self.signal_value_enum.clear()
-                # self.signal_value_enum.addItems(signal.allowed)
-                # if signal.temp_value:
-                #     idx = self.signal_value_enum.findText(signal.temp_value)
-                    # if idx >= 0:
-                        # self.signal_value_enum.setCurrentIndex(idx)
+                self.signal_value_enum.addItems(signal.allowed_values)
+                if signal.value:
+                     idx = self.signal_value_enum.findText(signal.value)
+                     if idx >= 0:
+                        self.signal_value_enum.setCurrentIndex(idx)
             case 4:
                 self.signal_value_double.setValue(signal.value or 0.0)
+            case 5:
+                self.signal_min_max_slider.setMinimum(signal.min_value)
+                self.signal_min_max_slider.setMaximum(signal.max_value)
+                self.min_label.setText(f"{signal.min_value}")
+                self.max_label.setText(f"{signal.max_value}")
+                print("Need to slider") 
+            case 6:
+                self.signal_value_string.setText(signal.value)
+                print("need to enter string") 
+
+
+
+# slider setting and showing
+    def set_slider_range(self,min_value,max_value):
+        try:
+            min_text = self.min_label.text()
+            max_text = self.max_label.text()
+
+            is_float = '.' in min_text or '.' in max_text
+
+            if is_float:
+                min_val = float(min_text)
+                max_val = float(max_text)
+                self.multiplier = 100  # for 2 decimal precision
+                self.float_mode = True
+            else:
+                min_val = int(min_text)
+                max_val = int(max_text)
+                self.multiplier = 1
+                self.float_mode = False
+
+            if min_val >= max_val:
+                self.value_label.setText("Error: Min must be < Max")
+                return
+
+            self.true_min = min_val
+
+            self.slider.setMinimum(int(min_val * self.multiplier))
+            self.slider.setMaximum(int(max_val * self.multiplier))
+            self.slider.setValue(int(min_val * self.multiplier))
+
+        except ValueError:
+            self.value_label.setText("Invalid input")
+
+    def on_value_change(self, value):
+        # if self.float_mode:
+        #     val = value / self.multiplier
+        #     self.value_label.setText(f"Value: {val:.2f}")
+        # else:
+        self.signal_value_min_max.setText(f"{value}")
+
+  
