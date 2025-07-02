@@ -41,8 +41,16 @@ class MainWindow(QMainWindow):
             base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
             return os.path.join(base_path, relative_path)
         
-        ui_path = resource_path("UI/mainWindow2.ui")
+        ui_path = resource_path("UI/mainWindow.ui")
         uic.loadUi(ui_path, self)
+
+        # Disable maximize button
+        self.setWindowFlags(Qt.Window |
+                            Qt.WindowMinimizeButtonHint |
+                            Qt.WindowCloseButtonHint)
+
+        # Optional: Prevent resizing
+        self.setFixedSize(self.size())
 
 
         self.connection_dialog = None
