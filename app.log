@@ -160,3 +160,40 @@
 2025-06-30 15:38:31,598 - INFO - Establishing insecure channel
 2025-06-30 15:39:13,002 - INFO - No Root CA present, it will not be possible to use a secure connection!
 2025-06-30 15:39:13,002 - INFO - Establishing insecure channel
+2025-07-02 10:40:46,492 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 10:40:46,495 - INFO - \u274c Invalid IP or Port. Please provide valid connection parameters.
+2025-07-02 10:41:17,093 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 10:41:17,094 - INFO - \u274c Invalid IP or Port. Please provide valid connection parameters.
+2025-07-02 10:41:20,807 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 10:41:20,807 - INFO - \u274c Invalid IP or Port. Please provide valid connection parameters.
+2025-07-02 10:41:42,222 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 10:41:42,222 - INFO - \u274c Invalid IP or Port. Please provide valid connection parameters.
+2025-07-02 10:41:56,251 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 10:41:56,251 - INFO - IP Address: 127.0.0.1
+2025-07-02 10:41:56,252 - INFO - PORT: 55555
+2025-07-02 10:41:56,252 - INFO - No Root CA present, it will not be possible to use a secure connection!
+2025-07-02 10:41:56,252 - INFO - Establishing insecure channel
+2025-07-02 10:41:58,335 - INFO - \u274c Connection failed: ({'code': 14, 'reason': 'unavailable', 'message': 'failed to connect to all addresses; last error: UNAVAILABLE: ipv4:127.0.0.1:55555: ConnectEx: Connection refused (No connection could be made because the target machine actively refused it.\r\n -- 10061)'}, [])
+2025-07-02 10:41:58,335 - INFO - \u274c Connection failed
+2025-07-02 10:41:58,336 - INFO - \u26a0\ufe0f Not connected.
+2025-07-02 12:11:51,531 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 12:11:51,534 - INFO - IP Address: 127.0.0.1
+2025-07-02 12:11:51,534 - INFO - PORT: 55555
+2025-07-02 12:11:51,534 - INFO - No Root CA present, it will not be possible to use a secure connection!
+2025-07-02 12:11:51,534 - INFO - Establishing insecure channel
+2025-07-02 12:11:51,609 - INFO - \u2705 Connected to 127.0.0.1:55555
+2025-07-02 12:11:51,609 - INFO - \u2705 Connection successful
+2025-07-02 12:11:51,630 - INFO - \U0001f4e6 Total Signal Objects: 913
+2025-07-02 12:11:51,630 - INFO - Connection Established
+2025-07-02 12:31:38,095 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 12:31:38,095 - INFO - IP Address: 127.0.0.1
+2025-07-02 12:31:38,095 - INFO - PORT: 55555
+2025-07-02 12:31:38,096 - INFO - \u274c Connection failed: BaseVSSClient.__init__() got an unexpected keyword argument 'insecure'
+2025-07-02 12:31:38,096 - INFO - \u274c Connection failed
+2025-07-02 12:31:38,096 - INFO - \u26a0\ufe0f Not connected.
+2025-07-02 12:31:44,708 - INFO - \U0001f4f1 Attempting to connect...
+2025-07-02 12:31:44,708 - INFO - IP Address: 127.0.0.1
+2025-07-02 12:31:44,708 - INFO - PORT: 55555
+2025-07-02 12:31:44,709 - INFO - \u274c Connection failed: BaseVSSClient.__init__() got an unexpected keyword argument 'insecure'
+2025-07-02 12:31:44,709 - INFO - \u274c Connection failed
+2025-07-02 12:31:44,709 - INFO - \u26a0\ufe0f Not connected.

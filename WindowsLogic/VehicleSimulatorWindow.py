@@ -1,5 +1,6 @@
 import sys
 import logging
+import os
 
 from .connectionDialog import ConnectionDialog
 from DataBrokerHandler import * 
@@ -33,8 +34,16 @@ class LogLevel(Enum):
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+
         
-        uic.loadUi("UI/mainWindow2.ui",self)
+        def resource_path(relative_path):
+            # When running as .exe, sys._MEIPASS is the temp folder where PyInstaller unpacks files
+            base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+            return os.path.join(base_path, relative_path)
+        
+        ui_path = resource_path("UI/mainWindow2.ui")
+        uic.loadUi(ui_path, self)
+
 
         self.connection_dialog = None
         self.active_signal = None
