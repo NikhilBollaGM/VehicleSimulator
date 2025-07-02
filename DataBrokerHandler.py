@@ -31,8 +31,7 @@ class KuksaConnector:
             return True
 
         try:
-            self.client = VSSClient(self.ip, self.port)
-            self.client.__enter__()
+            self.client = VSSClient(self.ip, self.port,)
             self.connected = True
             Logger.log(f"✅ Connected to {self.ip}:{self.port}")
             return True

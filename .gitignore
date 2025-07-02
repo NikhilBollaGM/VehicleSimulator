@@ -1,2 +1,22 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+
+# Environment and build
+.env
+.venv/
+env/
+venv/
+dist/
+build/
+*.egg-info/
+
+# PyInstaller
+*.spec
+
+# Logs
+*.log
 app.log
-app.txt
