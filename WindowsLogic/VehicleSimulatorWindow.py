@@ -73,13 +73,8 @@ class MainWindow(QMainWindow):
         self.signal_list_widget.itemClicked.connect(self.select_signal_from_list)
 
 
-        # self.signal_list_dropdown.addItem("") #use if combo
-        # self.actionBrowse_file.triggered.connect(self.open_file_dialog) 
-        # self.signal_list_dropdown.lineEdit().textEdited.connect(self.search_signal) #use if combo
-        # self.signal_list_dropdown.currentTextChanged.connect(self.on_signal_selected) #when clicked on any item in dropdown in combo
+       
         self.actionEstablish_connection_2.triggered.connect(self.showConnectionDialog)
-        # self.signal_true_radio.clicked.connect(lambda: self.set_temp_value_bool(True))
-        # self.signal_false_radio.clicked.connect(lambda: self.set_temp_value_bool(False))
         self.send_signal_button.clicked.connect(self.commit_value)
 
     # function to log message in log arrea
@@ -96,20 +91,44 @@ class MainWindow(QMainWindow):
 
     #function to show connection dialog box
     def showConnectionDialog(self):
+        print("calling show connection dialog")
+        
         if not self.connection_dialog:
             self.connection_dialog = ConnectionDialog()
-            
-            if(not self.isDatabrokerConnected):
-                self.connection_dialog.databroker_connect_button.clicked.connect(lambda: self.onEstablishConnection(self.connection_dialog)) #lambda 
-            else:
-                self.connection_dialog.databroker_connect_button.clicked.connect(lambda: self.onDisconnect(self.connection_dialog))
+
+        # Always disconnect previous connection
+        try:
+            self.connection_dialog.databroker_connect_button.clicked.disconnect()
+        except TypeError:
+            pass  # No connection to disconnect
+
+        if not self.isDatabrokerConnected:
+            print("calling on establish")
+            self.connection_dialog.databroker_connect_button.clicked.connect(lambda: self.onEstablishConnection(self.connection_dialog))
+            self.connection_dialog.databroker_connect_button.setText("Connect")
+        else:
+            print("calling on disconnect")
+            self.connection_dialog.databroker_connect_button.clicked.connect(self.onDisconnect)
+            self.connection_dialog.databroker_connect_button.setText("Disconnect")
+
         print("connect button clicked")
         self.connection_dialog.exec_()
+
 
     # when clicked on disconnect button
     def onDisconnect(self):
         print("Disconnecting")
         self.kuksaConnectorObj.disconnect()
+        self.isDatabrokerConnected = False
+        self.actionEstablish_connection_2.setText("Connect")
+        self.signals = {}
+        self.signal_list_widget.clear()
+
+        if(self.connection_dialog):
+            self.connection_dialog.accept()
+
+
+        self.log_message("Disconnected from databroker.", LogLevel.INFO)
 
     # when clickedon connect button   
     def onEstablishConnection(self, dialog):
@@ -125,12 +144,13 @@ class MainWindow(QMainWindow):
         
         if(not self.kuksaConnectorObj == None ):
             if(self.kuksaConnectorObj.connected ):
-                self.isDatabrokerConnected = False
+                self.isDatabrokerConnected = True
                 logging.info("Connection Established")
                 self.log_message(f"Conected to IP:{ip}, PORT:{port}")
                 dialog.set_values(ip,port)
                 self.connection_dialog.databroker_connect_button.setText("Disconnect")
                 self.actionEstablish_connection_2.setText("Disconnect")
+                dialog.accept()
             
             # fetching all the signals and storing it in signal objects
             signal_objects = self.kuksaConnectorObj.get_all_signal_objects()
@@ -205,9 +225,6 @@ class MainWindow(QMainWindow):
             self.signal_list_widget.hide()
         else:
             self.signal_list_widget.show()
-        # self.signal_list_widget.setVisible(not self.signal_list_widget.isVisible())
-        # if self.signal_list_widget.isVisible():
-        #     self.signal_list_widget.raise_()
 
 
 # signal search function
@@ -285,7 +302,6 @@ class MainWindow(QMainWindow):
 
         self.stackedWidget.setCurrentIndex(index) #based on type particular input widget will be shown
 
-        # if(hasattr(signal, "min_value")):
             
         # logic to show the previous value in the input
         match index:
