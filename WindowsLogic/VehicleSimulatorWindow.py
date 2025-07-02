@@ -36,6 +36,14 @@ class MainWindow(QMainWindow):
         
         uic.loadUi("UI/mainWindow2.ui",self)
 
+        # Disable maximize button
+        self.setWindowFlags(Qt.Window |
+                            Qt.WindowMinimizeButtonHint |
+                            Qt.WindowCloseButtonHint)
+
+        # Optional: Prevent resizing
+        self.setFixedSize(self.size())
+
         self.connection_dialog = None
         self.active_signal = None
         self.loading_yaml = False
