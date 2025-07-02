@@ -34,7 +34,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         
-        uic.loadUi("UI/mainWindow2.ui",self)
+        uic.loadUi("UI/mainWindow.ui",self)
 
         # Disable maximize button
         self.setWindowFlags(Qt.Window |
