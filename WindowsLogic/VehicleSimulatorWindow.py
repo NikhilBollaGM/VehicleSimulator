@@ -26,7 +26,7 @@ format= '%(asctime)s - %(levelname)s - %(message)s'
 class LogLevel(Enum):
     SUCCESS = "green"
     FAILED = "red"
-    INFO = "black"
+    INFO = "white"
 
 
  
@@ -60,6 +60,7 @@ class MainWindow(QMainWindow):
         self.signals= {} 
         self.initialising = True
         self.isDatabrokerConnected = False
+        self.label_7.setText("Connect to Databroker!")
         self.signal_value_int.setMinimum(-999999) 
         self.signal_value_int.setMaximum(999999) #need to handle in designer and dynamically based min and max
         self.signal_value_double.setMaximum(999999)#need to handle in designer and 
@@ -128,10 +129,24 @@ class MainWindow(QMainWindow):
     def onDisconnect(self):
         print("Disconnecting")
         self.kuksaConnectorObj.disconnect()
+        
+        self.label_7.setText("Connect to Databroker!")
         self.isDatabrokerConnected = False
         self.actionEstablish_connection_2.setText("Connect")
-        self.signals = {}
+        self.signals.clear()
+        self.all_signals = []
+        self.signal_search_input.clear()
         self.signal_list_widget.clear()
+        self.toggle_signal_list()
+        self.active_signal = None
+        self.signal_name_value_container.setText("")
+        self.description_value_container.setText("")
+        self.signal_type_value_container.setText("")
+        self.datatype_value_container.setText("")
+        self.unit_value_container.setText("")
+        self.stackedWidget.setCurrentIndex(0)
+
+
 
         if(self.connection_dialog):
             self.connection_dialog.accept()
@@ -253,6 +268,9 @@ class MainWindow(QMainWindow):
 
         self.signal_list_widget.show()
 
+
+
+#when a signal is selected based on that signal info is changed
     def select_signal_from_list(self, item):
         signal_name = item.text()
         if signal_name == "No match":
@@ -290,6 +308,23 @@ class MainWindow(QMainWindow):
         self.datatype_value_container.setText(signal.data_type)
         self.unit_value_container.setText(signal.unit or "")
         
+        signal_type_map = {
+            "ATTRIBUTE":1,
+            "BRANCH":2,
+            "SENSOR":3,
+            "ACTUATOR":4
+        }
+
+        signalType = signal_type_map.get(signal.entry_type,0)
+        if(signalType==1):
+            self.signal_type_value_container.setStyleSheet("color:#D7AD03")
+        elif(signalType==2):
+            self.signal_type_value_container.setStyleSheet("color:#D7AD03")
+        elif(signalType==3):
+            self.signal_type_value_container.setStyleSheet("color:#6480A2")
+        elif(signalType==4):
+            self.signal_type_value_container.setStyleSheet("color:#626262")
+
 
         # Switch stacked widget page based on type
         type_map = {
@@ -304,13 +339,22 @@ class MainWindow(QMainWindow):
 
         if(not signal.is_enum and index == 3):
             index = 6 #to display string input
-        elif((signal.min_value != None) and (signal.max_value != None) ):
+        elif((signal.min_value != None) and (signal.max_value != None) and not index==4):
             index=5
             print(signal.min_value)
             print(signal.max_value)
 
         self.stackedWidget.setCurrentIndex(index) #based on type particular input widget will be shown
 
+        input_fields = {
+            2: self.units_label, #int
+            4: self.units_label_3, #float
+            5: self.units_label_4  #minand max
+
+        }
+        if(index==2 or index==4 or index==5):
+            current_input = input_fields[index]
+            current_input.setText(signal.unit)
             
         # logic to show the previous value in the input
         match index:

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>881</width>
-    <height>632</height>
+    <width>868</width>
+    <height>376</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>0</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Vehicle Simulator</string>
@@ -64,7 +70,8 @@ QToolButton#send_signal_button:hover {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">Background-color:rgb(255, 255, 255)</string>
+     <string notr="true">Background-color:rgb(255,255,255);
+border-radius:8px;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -86,9 +93,12 @@ QToolButton#send_signal_button:hover {
     font: bold 15px; /* title only */
 }
 
-QGroupBox QLabel, QGroupBox QLineEdit {
-    font: bold 13px; /* inner widgets */
+QGroupBox QLabel, QGroupBox QLineEdit, QGroupBox QTextBrowser {
+    font: bold 13px ; /* inner widgets */
+	/*color: rgb(77, 77, 77);*/
     border:2px;
+  
+    
 }
 </string>
      </property>
@@ -111,79 +121,64 @@ QGroupBox QLabel, QGroupBox QLineEdit {
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="description_label">
-        <property name="text">
-         <string>Description:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QLabel" name="description_value_container">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>100</height>
-         </size>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
        <widget class="QLabel" name="signal_type_label">
         <property name="text">
          <string>Signal Type:</string>
         </property>
        </widget>
       </item>
-      <item row="2" column="1">
+      <item row="1" column="1">
        <widget class="QLabel" name="signal_type_value_container">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
+      <item row="2" column="0">
        <widget class="QLabel" name="datatype_label">
         <property name="text">
          <string>Datatype:</string>
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="2" column="1">
        <widget class="QLabel" name="datatype_value_container">
         <property name="text">
          <string/>
         </property>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="3" column="0">
        <widget class="QLabel" name="unit_label">
         <property name="text">
          <string>Units:</string>
         </property>
        </widget>
       </item>
-      <item row="4" column="1">
+      <item row="3" column="1">
        <widget class="QLabel" name="unit_value_container">
         <property name="styleSheet">
-         <string notr="true">QGroupBox{
- font: bold 15px;
-}
-
-QGroupBox QLabel{
- font: 10px;
-}</string>
+         <string notr="true"/>
         </property>
         <property name="text">
          <string/>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="description_label">
+        <property name="text">
+         <string>Description:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QTextBrowser" name="description_value_container">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>100</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -207,6 +202,7 @@ QGroupBox QLabel{
      <property name="styleSheet">
       <string notr="true">QGroupBox {
     font: bold 15px; /* title only */
+ /*border:0px;*/
 }</string>
      </property>
      <property name="title">
@@ -223,6 +219,9 @@ QGroupBox QLabel{
             <height>30</height>
            </size>
           </property>
+          <property name="placeholderText">
+           <string>Search signal here...</string>
+          </property>
          </widget>
         </item>
         <item>
@@ -233,8 +232,26 @@ QGroupBox QLabel{
             <height>30</height>
            </size>
           </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::ClickFocus</enum>
+          </property>
           <property name="text">
            <string>...</string>
+          </property>
+          <property name="popupMode">
+           <enum>QToolButton::DelayedPopup</enum>
+          </property>
+          <property name="toolButtonStyle">
+           <enum>Qt::ToolButtonFollowStyle</enum>
+          </property>
+          <property name="autoRaise">
+           <bool>false</bool>
+          </property>
+          <property name="arrowType">
+           <enum>Qt::DownArrow</enum>
           </property>
          </widget>
         </item>
@@ -261,7 +278,8 @@ QGroupBox QLabel{
      </sizepolicy>
     </property>
     <property name="styleSheet">
-     <string notr="true">Background-color:rgb(255,255,255);</string>
+     <string notr="true">Background-color:rgb(255,255,255);
+border-radius:8px;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -281,6 +299,8 @@ QGroupBox QLabel{
      <property name="styleSheet">
       <string notr="true">QGroupBox {
     font: bold 15px; /* title only */
+	/*border:0px*/
+
 }
 
 </string>
@@ -301,16 +321,16 @@ QGroupBox QLabel{
        <string notr="true">Background-color:rgb(255,255,255);</string>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_5">
        <widget class="QLabel" name="label_7">
         <property name="geometry">
          <rect>
-          <x>30</x>
-          <y>80</y>
-          <width>231</width>
-          <height>31</height>
+          <x>0</x>
+          <y>100</y>
+          <width>301</width>
+          <height>21</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -319,7 +339,10 @@ font-weight:bold;
 color: rgb(120, 120, 120);</string>
         </property>
         <property name="text">
-         <string>            Select a signal</string>
+         <string>Select a signal</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </widget>
@@ -365,9 +388,35 @@ font-weight:bold</string>
          <rect>
           <x>10</x>
           <y>30</y>
-          <width>281</width>
+          <width>181</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:5px;
+padding:8px;
+border: 1px solid rgb(230, 230, 230);</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="units_label">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>30</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-family: Consolas, monospace;
+    font-size: 15px;
+  </string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -381,6 +430,11 @@ font-weight:bold</string>
           <height>31</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:5px;
+padding:8px;
+border: 1px solid rgb(230, 230, 230);</string>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="page_4">
@@ -389,9 +443,35 @@ font-weight:bold</string>
          <rect>
           <x>10</x>
           <y>30</y>
-          <width>281</width>
+          <width>181</width>
           <height>31</height>
          </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:5px;
+padding:8px;
+border: 1px solid rgb(230, 230, 230);</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="units_label_3">
+        <property name="geometry">
+         <rect>
+          <x>210</x>
+          <y>30</y>
+          <width>81</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-family: Consolas, monospace;
+    font-size: 15px;
+  </string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </widget>
@@ -409,31 +489,12 @@ font-weight:bold</string>
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
-       <widget class="QLabel" name="signal_value_min_max">
-        <property name="geometry">
-         <rect>
-          <x>100</x>
-          <y>100</y>
-          <width>81</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">font: 20px;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
        <widget class="QLabel" name="min_label">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>70</y>
-          <width>20</width>
+          <width>31</width>
           <height>20</height>
          </rect>
         </property>
@@ -443,13 +504,16 @@ font-weight:bold</string>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
         </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
        </widget>
        <widget class="QLabel" name="max_label">
         <property name="geometry">
          <rect>
           <x>270</x>
           <y>70</y>
-          <width>21</width>
+          <width>31</width>
           <height>20</height>
          </rect>
         </property>
@@ -458,6 +522,38 @@ font-weight:bold</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="units_label_4">
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>100</y>
+          <width>71</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="signal_value_min_max">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>100</y>
+          <width>81</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;</string>
         </property>
        </widget>
       </widget>
@@ -471,6 +567,14 @@ font-weight:bold</string>
           <height>31</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">border-radius:5px;
+padding:8px;
+border: 1px solid rgb(230, 230, 230);</string>
+        </property>
+        <property name="placeholderText">
+         <string>String Input</string>
+        </property>
        </widget>
       </widget>
      </widget>
@@ -478,7 +582,7 @@ font-weight:bold</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>260</y>
+        <y>290</y>
         <width>281</width>
         <height>31</height>
        </rect>
@@ -527,6 +631,7 @@ border:0px;
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(219, 219, 219);
+border:0px;
 font:10px</string>
      </property>
      <property name="widgetResizable">
@@ -537,8 +642,8 @@ font:10px</string>
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>829</width>
-        <height>209</height>
+        <width>831</width>
+        <height>211</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -568,7 +673,7 @@ font:10px</string>
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>80</y>
+      <y>70</y>
       <width>461</width>
       <height>250</height>
      </rect>
@@ -591,6 +696,10 @@ font:10px</string>
       <height>250</height>
      </size>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border:1px solid rgb(197, 197, 197);
+border-top:0px;</string>
+    </property>
     <property name="horizontalScrollBarPolicy">
      <enum>Qt::ScrollBarAlwaysOff</enum>
     </property>
@@ -604,7 +713,7 @@ font:10px</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>881</width>
+     <width>868</width>
      <height>18</height>
     </rect>
    </property>
