@@ -44,12 +44,12 @@ class MainWindow(QMainWindow):
         ui_path = resource_path("UI/mainWindow.ui")
         uic.loadUi(ui_path, self)
 
-        # Disable maximize button
+        # Disabling maximize button
         self.setWindowFlags(Qt.Window |
                             Qt.WindowMinimizeButtonHint |
                             Qt.WindowCloseButtonHint)
 
-        # Optional: Prevent resizing
+        # setting fixed size on startup
         self.setFixedSize(self.size())
 
 
@@ -162,31 +162,33 @@ class MainWindow(QMainWindow):
         print(ip)
 
         # Connecting to kuksa
-        self.kuksaConnectorObj = establishKuksaConnection(ip,port)
+        try:
+            self.kuksaConnectorObj = establishKuksaConnection(ip,port)
 
-        
-        
-        if(not self.kuksaConnectorObj == None ):
-            if(self.kuksaConnectorObj.connected ):
-                self.isDatabrokerConnected = True
-                logging.info("Connection Established")
-                self.log_message(f"Conected to IP:{ip}, PORT:{port}")
-                dialog.set_values(ip,port)
-                self.connection_dialog.databroker_connect_button.setText("Disconnect")
-                self.actionEstablish_connection_2.setText("Disconnect")
-                dialog.accept()
             
-            # fetching all the signals and storing it in signal objects
-            signal_objects = self.kuksaConnectorObj.get_all_signal_objects()
             
-            self.signals = {s.name: s for s in signal_objects}
-            self.all_signals = list(self.signals.keys())
+            if(not self.kuksaConnectorObj == None and self.kuksaConnectorObj.connected ):
+                if(self.kuksaConnectorObj.connected ):
+                    self.isDatabrokerConnected = True
+                    logging.info("Connection Established")
+                    self.log_message(f"Conected to IP:{ip}, PORT:{port}")
+                    dialog.set_values(ip,port)
+                    self.connection_dialog.databroker_connect_button.setText("Disconnect")
+                    self.actionEstablish_connection_2.setText("Disconnect")
+                    dialog.accept()
+                
+                # fetching all the signals and storing it in signal objects
+                signal_objects = self.kuksaConnectorObj.get_all_signal_objects()
+                
+                self.signals = {s.name: s for s in signal_objects}
+                self.all_signals = list(self.signals.keys())
 
-            #adding al signals into signal list
-            self.signal_list_widget.clear() 
-            self.signal_list_widget.addItems(self.all_signals)
-            self.signal_search_input.clear()
-        
+                #adding al signals into signal list
+                self.signal_list_widget.clear() 
+                self.signal_list_widget.addItems(self.all_signals)
+                self.signal_search_input.clear()
+        except Exception as e:
+            self.log_message(f"An error occurred while connecting to {ip}:{port}:\n{e}", LogLevel.FAILED)  
 
 
     def commit_value(self):
@@ -306,7 +308,7 @@ class MainWindow(QMainWindow):
         self.description_value_container.setText(signal.description or "")
         self.signal_type_value_container.setText(signal.entry_type)
         self.datatype_value_container.setText(signal.data_type)
-        self.unit_value_container.setText(signal.unit or "")
+        self.unit_value_container.setText(signal.unit or "--")
         
         signal_type_map = {
             "ATTRIBUTE":1,
@@ -339,7 +341,7 @@ class MainWindow(QMainWindow):
 
         if(not signal.is_enum and index == 3):
             index = 6 #to display string input
-        elif((signal.min_value != None) and (signal.max_value != None) and not index==4):
+        elif((signal.min_value != None) and (signal.max_value != None)):
             index=5
             print(signal.min_value)
             print(signal.max_value)
@@ -373,6 +375,7 @@ class MainWindow(QMainWindow):
             case 4:
                 self.signal_value_double.setValue(signal.value or 0.0)
             case 5:
+                
                 self.signal_min_max_slider.setMinimum(signal.min_value)
                 self.signal_min_max_slider.setMaximum(signal.max_value)
                 self.min_label.setText(f"{signal.min_value}")
