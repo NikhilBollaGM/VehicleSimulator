@@ -31,7 +31,8 @@ class KuksaConnector:
             return True
 
         try:
-            self.client = VSSClient(self.ip, self.port,)
+            Logger.log(f"ℹ️ Connecting to: {self.ip}:{self.port}")
+            self.client = VSSClient(self.ip, self.port)
             self.client.__enter__()
             self.connected = True
             Logger.log(f"✅ Connected to {self.ip}:{self.port}")
@@ -40,6 +41,7 @@ class KuksaConnector:
             Logger.log(f"❌ Connection failed: {e}")
             self.client = None
             self.connected = False
+            self._initialized = False
             return False
 
     def disconnect(self):
@@ -47,6 +49,7 @@ class KuksaConnector:
             self.client.__exit__(None, None, None)
             Logger.log("🔌 Disconnected.")
         self.connected = False
+        self._initialized = False
 
     def get_all_signal_objects(self) -> List[SignalObject]:
         if not self.connected or not self.client:
@@ -79,7 +82,7 @@ class KuksaConnector:
                     max_value=max_val,
                     allowed_values=allowed
                 )
-
+                Logger.log(signal)
                 signal_objects.append(signal)
 
             return signal_objects
